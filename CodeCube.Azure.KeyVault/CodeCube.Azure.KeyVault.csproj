@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Rob Lohmann</Authors>
+    <Description>A straight-forward an simple wrapper around Azure Key Vault.</Description>
+    <Copyright>Copyright 2019 Rob Lohmann</Copyright>
+    <PackageProjectUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</RepositoryUrl>
+    <PackageTags>azure keyvault</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
