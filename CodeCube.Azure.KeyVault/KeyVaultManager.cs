@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
@@ -17,14 +18,50 @@ namespace CodeCube.Azure.KeyVault
         }
 
         /// <summary>
-        /// 
+        /// Retrieve the secret with the provided identifier name.
         /// </summary>
-        /// <param name="keyVaultBaseUrl"></param>
-        /// <param name="secretName"></param>
-        /// <returns></returns>
+        /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
+        /// <param name="secretName">The identifier name of the secret to retrieve.</param>
+        /// <returns>An <see cref="SecretBundle"/> containing the id, value and properties with this secret.</returns>
         public async Task<SecretBundle> GetSecret(string keyVaultBaseUrl, string secretName)
         {
             return await keyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName).ConfigureAwait(false);
+        }
+        
+        /// <summary>
+        /// Retrieve the value of the secret with the provided identifier name.
+        /// </summary>
+        /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
+        /// <param name="secretName">The identifier name of the secret to retrieve.</param>
+        /// <returns>The value of the secret.</returns>
+        public async Task<string> GetSecretValue(string keyVaultBaseUrl, string secretName)
+        {
+            SecretBundle secret = await GetSecret(keyVaultBaseUrl, secretName);
+
+            if(secret == null)
+            {
+                throw new InvalidOperationException("Failed to retrieve secret!");
+            }
+
+            return secret.Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
+        /// <param name="certificateName">The identifier name of the certificate to retrieve.</param>
+        /// <returns>The <see cref="X509Certificate"/> from the Azure Key Vault.</returns>
+        public async Task<X509Certificate> GetCertificate(string keyVaultBaseUrl, string certificateName)
+        {
+            var certificateBUndle = await keyVaultClient.GetCertificateAsync(keyVaultBaseUrl, certificateName);
+
+            if(certificateBUndle == null)
+            {
+                throw new InvalidOperationException("Failed to retrieve certificate!");
+            }
+
+            return new X509Certificate(certificateBUndle.Cer);
         }
 
         /// <summary>
