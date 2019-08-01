@@ -22,21 +22,21 @@ namespace CodeCube.Azure.KeyVault
 
         #region secrets
         /// <summary>
-        /// Retrieve the secret with the provided identifier name.
+        /// Retrieve the secret with the provided secretname.
         /// </summary>
         /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
-        /// <param name="secretName">The identifier name of the secret to retrieve.</param>
-        /// <returns>An <see cref="SecretBundle"/> containing the id, value and properties with this secret.</returns>
+        /// <param name="secretName">The name of the secret to retrieve.</param>
+        /// <returns>An <see cref="SecretBundle"/> if present.</returns>
         public async Task<SecretBundle> GetSecret(string keyVaultBaseUrl, string secretName)
         {
             return await keyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieve the value of the secret with the provided identifier name.
+        /// Retrieve the value of the secret with the provided secretname.
         /// </summary>
         /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
-        /// <param name="secretName">The identifier name of the secret to retrieve.</param>
+        /// <param name="secretName">The name of the secret to retrieve.</param>
         /// <returns>The value of the secret.</returns>
         public async Task<string> GetSecretValue(string keyVaultBaseUrl, string secretName)
         {
@@ -44,7 +44,7 @@ namespace CodeCube.Azure.KeyVault
 
             if (secret == null)
             {
-                throw new InvalidOperationException("Failed to retrieve secret!");
+                throw new InvalidOperationException("Failed to retrieve secret. Secret could not be found!");
             }
 
             return secret.Value;
@@ -83,11 +83,11 @@ namespace CodeCube.Azure.KeyVault
 
         #region keys
         /// <summary>
-        /// 
+        /// Retrieve the keybundle with the provided keyname.
         /// </summary>
-        /// <param name="keyVaultBaseUrl"></param>
-        /// <param name="keyName"></param>
-        /// <returns></returns>
+        /// <param name="keyVaultBaseUrl">The base URL to the Azure Key Vault</param>
+        /// <param name="keyName">The name of the key to retrieve.</param>
+        /// <returns>The <see cref="KeyBundle"/> if present.</returns>
         public async Task<KeyBundle> GetKey(string keyVaultBaseUrl, string keyName)
         {
             return await keyVaultClient.GetKeyAsync(keyVaultBaseUrl, keyName).ConfigureAwait(false);
