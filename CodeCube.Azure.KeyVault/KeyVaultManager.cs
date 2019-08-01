@@ -81,6 +81,19 @@ namespace CodeCube.Azure.KeyVault
         }
         #endregion
 
+        #region keys
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyVaultBaseUrl"></param>
+        /// <param name="keyName"></param>
+        /// <returns></returns>
+        public async Task<KeyBundle> GetKey(string keyVaultBaseUrl, string keyName)
+        {
+            return await keyVaultClient.GetKeyAsync(keyVaultBaseUrl, keyName).ConfigureAwait(false);
+        }
+        #endregion
+
         #region certificates
         /// <summary>
         /// 
