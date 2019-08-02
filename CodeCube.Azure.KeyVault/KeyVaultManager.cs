@@ -10,14 +10,17 @@ using Microsoft.Rest.Azure;
 
 namespace CodeCube.Azure.KeyVault
 {
-    internal sealed class KeyVaultManager
+    /// <summary>
+    /// Manager class to communicatie with the Azure KeyVault
+    /// </summary>
+    public sealed class KeyVaultManager
     {
-        private KeyVaultClient keyVaultClient { get; }
+        private KeyVaultClient KeyVaultClient { get; }
 
         public KeyVaultManager()
         {
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
-            keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            KeyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         }
 
         #region secrets
@@ -29,7 +32,7 @@ namespace CodeCube.Azure.KeyVault
         /// <returns>An <see cref="SecretBundle"/> if present.</returns>
         public async Task<SecretBundle> GetSecret(string keyVaultBaseUrl, string secretName)
         {
-            return await keyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName).ConfigureAwait(false);
+            return await KeyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace CodeCube.Azure.KeyVault
         /// <returns>A list of <see cref="SecretValue"/> containg all currently active values matching the provided secretname.</returns>
         public async Task<List<SecretValue>> GetActiveSecretValues(string keyVaultBaseUrl, string secretName)
         {
-            IPage<SecretItem> secrets = await keyVaultClient.GetSecretVersionsAsync(keyVaultBaseUrl, secretName);
+            IPage<SecretItem> secrets = await KeyVaultClient.GetSecretVersionsAsync(keyVaultBaseUrl, secretName);
             List<SecretValue> activeSecrets = new List<SecretValue>();
 
             if (secrets == null || !secrets.Any())
@@ -70,7 +73,7 @@ namespace CodeCube.Azure.KeyVault
             {
                 if (IsSecretActive(secret))
                 {
-                    var secretBundle = await keyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName, secret.Identifier.Version)
+                    var secretBundle = await KeyVaultClient.GetSecretAsync(keyVaultBaseUrl, secretName, secret.Identifier.Version)
                                         .ConfigureAwait(false);
 
                     activeSecrets.Add(new SecretValue(secretBundle.Value));
@@ -90,7 +93,7 @@ namespace CodeCube.Azure.KeyVault
         /// <returns>The <see cref="KeyBundle"/> if present.</returns>
         public async Task<KeyBundle> GetKey(string keyVaultBaseUrl, string keyName)
         {
-            return await keyVaultClient.GetKeyAsync(keyVaultBaseUrl, keyName).ConfigureAwait(false);
+            return await KeyVaultClient.GetKeyAsync(keyVaultBaseUrl, keyName).ConfigureAwait(false);
         }
         #endregion
 
@@ -103,7 +106,7 @@ namespace CodeCube.Azure.KeyVault
         /// <returns>The <see cref="X509Certificate"/> from the Azure Key Vault.</returns>
         public async Task<X509Certificate> GetCertificate(string keyVaultBaseUrl, string certificateName)
         {
-            var certificateBUndle = await keyVaultClient.GetCertificateAsync(keyVaultBaseUrl, certificateName)
+            var certificateBUndle = await KeyVaultClient.GetCertificateAsync(keyVaultBaseUrl, certificateName)
                                     .ConfigureAwait(false);
 
             if (certificateBUndle == null)
