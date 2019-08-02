@@ -1,7 +1,7 @@
 # CodeCube.Azure.KeyVault
 A straight-forward an simple wrapper around Azure Key Vault. This library can be use to retrieve the following things from Azure KeyVault;
 * Secrets
-* Certificates
+* Certificates (Coming soon)
 * Keys
 
 For more information on how to create Azure KeyVaults. Please have a look at https://docs.microsoft.com/azure/key-vault/tutorial-net-create-vault-azure-web-app
