@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</PackageProjectUrl>
     <RepositoryUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</RepositoryUrl>
     <PackageTags>azure keyvault</PackageTags>
+    <PackageIconUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault/blob/master/nuget-icon.png?raw=true</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
