@@ -7,6 +7,7 @@
     <PackageProjectUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</PackageProjectUrl>
     <RepositoryUrl>https://github.com/roblohmann/CodeCube.Azure.KeyVault</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <VersionPrefix>1.1.2</VersionPrefix>
   </PropertyGroup>
 
 </Project>
